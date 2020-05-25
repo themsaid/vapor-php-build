@@ -1,4 +1,4 @@
-FROM vapor/runtime/php-74:latest as php
+FROM vapor/runtime/compiler:latest as base
 
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
@@ -62,14 +62,14 @@ RUN mkdir -p ${DESTINATION_DIR}/lib \
 
 WORKDIR /opt
 
-COPY --from=php ${INSTALL_DIR}/lib/libMagickWand-6.Q16.so.6.0.0  ${DESTINATION_DIR}/lib/libMagickWand-6.Q16.so.6
-COPY --from=php ${INSTALL_DIR}/lib/libMagickCore-6.Q16.so.6.0.0 ${DESTINATION_DIR}/lib/libMagickCore-6.Q16.so.6
+COPY --from=base ${INSTALL_DIR}/lib/libMagickWand-6.Q16.so.6.0.0  ${DESTINATION_DIR}/lib/libMagickWand-6.Q16.so.6
+COPY --from=base ${INSTALL_DIR}/lib/libMagickCore-6.Q16.so.6.0.0 ${DESTINATION_DIR}/lib/libMagickCore-6.Q16.so.6
 
-COPY --from=php /usr/lib64/libwebp.so.4.0.2 ${DESTINATION_DIR}/lib/libwebp.so.4
-COPY --from=php ${INSTALL_DIR}/lib/libde265.so.0.0.12 ${DESTINATION_DIR}/lib/libde265.so.0
-COPY --from=php ${INSTALL_DIR}/lib/libheif.so.1.6.2 ${DESTINATION_DIR}/lib/libheif.so.1
+COPY --from=base /usr/lib64/libwebp.so.4.0.2 ${DESTINATION_DIR}/lib/libwebp.so.4
+COPY --from=base ${INSTALL_DIR}/lib/libde265.so.0.0.12 ${DESTINATION_DIR}/lib/libde265.so.0
+COPY --from=base ${INSTALL_DIR}/lib/libheif.so.1.6.2 ${DESTINATION_DIR}/lib/libheif.so.1
 
-COPY --from=php /tmp/imagick.so ${DESTINATION_DIR}/bin/imagick.so
+COPY --from=base /tmp/imagick.so ${DESTINATION_DIR}/bin/imagick.so
 
 RUN LD_LIBRARY_PATH= yum -y install zip
 
