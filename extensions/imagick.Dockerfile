@@ -2,8 +2,12 @@ FROM vapor/runtime/php-74:latest as php
 
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
-ENV PATH="/opt/bin:${PATH}" \
-    LD_LIBRARY_PATH="${INSTALL_DIR}/lib64:${INSTALL_DIR}/lib"
+
+ENV PKG_CONFIG_PATH="${INSTALL_DIR}/lib64/pkgconfig:${INSTALL_DIR}/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig" \
+    PKG_CONFIG="/usr/bin/pkg-config" \
+    PATH="${INSTALL_DIR}/bin:${PATH}"
+
+ENV LD_LIBRARY_PATH="${INSTALL_DIR}/lib64:${INSTALL_DIR}/lib"
 
 RUN mkdir -p ${IMAGICK_BUILD_DIR}
 RUN LD_LIBRARY_PATH= yum -y install libwebp-devel wget
