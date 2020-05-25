@@ -1,5 +1,7 @@
 FROM vapor/runtime/php-74:latest as base
 
+SHELL ["/bin/bash", "-c"]
+
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
 
