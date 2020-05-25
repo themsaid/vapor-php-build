@@ -373,7 +373,7 @@ RUN set -xe; \
 
 WORKDIR  ${PHP_BUILD_DIR}/
 
-RUN LD_LIBRARY_PATH= yum install -y readline-devel gettext-devel libicu-devel sqlite-devel libxslt-devel ImageMagick-devel
+RUN LD_LIBRARY_PATH= yum install -y readline-devel gettext-devel libicu-devel sqlite-devel libxslt-devel
 
 RUN set -xe \
  && ./buildconf --force \
@@ -426,9 +426,6 @@ RUN set -xe; \
 
 # RUN pecl install redis
 RUN pecl install -f redis
-
-# RUN pecl install imagick
-RUN pecl install imagick
 
 # Strip All Unneeded Symbols
 
