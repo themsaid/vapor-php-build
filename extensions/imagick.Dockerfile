@@ -1,15 +1,14 @@
-FROM vapor/runtime/php-74:latest as base
+FROM vapor/runtime/php-74-base:latest as base
 
 SHELL ["/bin/bash", "-c"]
 
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
 
+ENV LD_LIBRARY_PATH=/usr/lib:/usr/lib64:$LD_LIBRARY_PATH
+
 RUN set -xe \
     && yum groupinstall -y "Development Tools"  --setopt=group_package_types=mandatory,default
-
-
-RUN echo ${PATH}
 
 RUN mkdir -p ${IMAGICK_BUILD_DIR}
 RUN LD_LIBRARY_PATH= yum -y install libwebp-devel wget
