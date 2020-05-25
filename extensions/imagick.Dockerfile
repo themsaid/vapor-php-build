@@ -11,6 +11,8 @@ ENV PKG_CONFIG_PATH="${INSTALL_DIR}/lib64/pkgconfig:${INSTALL_DIR}/lib/pkgconfig
 
 ENV LD_LIBRARY_PATH="${INSTALL_DIR}/lib64:${INSTALL_DIR}/lib"
 
+RUN echo ${PATH}
+
 RUN mkdir -p ${IMAGICK_BUILD_DIR}
 RUN LD_LIBRARY_PATH= yum -y install libwebp-devel wget
 
