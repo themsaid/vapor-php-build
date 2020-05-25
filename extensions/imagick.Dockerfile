@@ -74,4 +74,4 @@ COPY --from=base /tmp/imagick.so ${DESTINATION_DIR}/bin/imagick.so
 
 RUN LD_LIBRARY_PATH= yum -y install zip
 
-CMD echo "zip --quiet --recurse-paths /export/imagick.zip  ${DESTINATION_DIR}"
+CMD zip --quiet --recurse-paths /export/imagick.zip  ${DESTINATION_DIR}

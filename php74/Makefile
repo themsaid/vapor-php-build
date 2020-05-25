@@ -14,6 +14,9 @@ distribute-extensions: build
 		vapor/runtime/imagick:latest
 
 distribution: build
+    docker run --rm \
+		--volume ${PWD}/../export:/export \
+		vapor/runtime/imagick:latest
 	docker run --rm \
 		--env PHP_SHORT_VERSION=74 \
 		--volume ${PWD}/runtime:/runtime:ro \
