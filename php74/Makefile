@@ -6,7 +6,7 @@ compiler: compiler.Dockerfile
 build: compiler
 	docker build -f ${PWD}/php.Dockerfile -t vapor/runtime/php-74:latest $(shell helpers/buildArguments.php php74) .
 
-build-extensions: build
+build-extensions: compiler
 	docker build -f ${PWD}/../extensions/imagick.Dockerfile -t vapor/runtime/imagick:latest .
 
 distribute-extensions: build-extensions
