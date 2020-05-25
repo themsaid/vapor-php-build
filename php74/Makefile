@@ -4,7 +4,15 @@ compiler: compiler.Dockerfile
 	docker build -f ${PWD}/compiler.Dockerfile -t vapor/runtime/compiler:latest .
 
 build: compiler
-	docker build --no-cache -f ${PWD}/php.Dockerfile -t vapor/runtime/php-74:latest $(shell helpers/buildArguments.php php74) .
+	docker build -f ${PWD}/php.Dockerfile -t vapor/runtime/php-74:latest $(shell helpers/buildArguments.php php74) .
+
+build-extensions: build
+	docker build -f ${PWD}/../extensions/imagick.Dockerfile -t vapor/runtime/imagick:latest .
+
+distribute-extensions: build-extensions
+	docker run --rm \
+		--volume ${PWD}/../export:/export \
+		vapor/runtime/imagick:latest
 
 distribution: build
 	docker run --rm \
