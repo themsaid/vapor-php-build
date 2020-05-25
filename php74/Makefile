@@ -9,9 +9,7 @@ build: compiler
 	docker build -f ${PWD}/../extensions/imagick.Dockerfile -t vapor/runtime/imagick:latest .
 
 distribute-extensions: build
-	docker run --rm \
-		--volume ${PWD}/../export:/export \
-		vapor/runtime/imagick:latest
+	docker run --rm --volume ${PWD}/../export:/export vapor/runtime/imagick:latest
 
 distribution: build
 	docker run --rm \

@@ -7,9 +7,6 @@ ENV INSTALL_DIR="/opt/vapor"
 
 ENV LD_LIBRARY_PATH=/usr/lib:/usr/lib64:$LD_LIBRARY_PATH
 
-RUN set -xe \
-    && yum groupinstall -y "Development Tools"  --setopt=group_package_types=mandatory,default
-
 RUN mkdir -p ${IMAGICK_BUILD_DIR}
 RUN LD_LIBRARY_PATH= yum -y install libwebp-devel wget
 
@@ -74,4 +71,4 @@ COPY --from=base /tmp/imagick.so ${DESTINATION_DIR}/bin/imagick.so
 
 RUN LD_LIBRARY_PATH= yum -y install zip
 
-CMD zip --quiet --recurse-paths /export/imagick.zip  ${DESTINATION_DIR}
+CMD zip --quiet --recurse-paths /export/imagick.zip ${DESTINATION_DIR}
