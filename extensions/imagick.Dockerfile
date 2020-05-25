@@ -1,4 +1,4 @@
-FROM vapor/runtime/compiler:latest as base
+FROM vapor/runtime/php-74:latest as base
 
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
