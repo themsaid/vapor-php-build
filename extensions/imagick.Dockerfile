@@ -2,6 +2,8 @@ FROM vapor/runtime/php-74:latest as php
 
 ENV IMAGICK_BUILD_DIR="/tmp/build/imagick"
 ENV INSTALL_DIR="/opt/vapor"
+ENV PATH="/opt/bin:${PATH}" \
+    LD_LIBRARY_PATH="${INSTALL_DIR}/lib64:${INSTALL_DIR}/lib"
 
 RUN mkdir -p ${IMAGICK_BUILD_DIR}
 RUN LD_LIBRARY_PATH= yum -y install libwebp-devel wget
@@ -49,22 +51,22 @@ RUN cp `php-config --extension-dir`/imagick.so /tmp/imagick.so
 FROM amazonlinux:2018.03
 
 ENV INSTALL_DIR="/opt/vapor"
+ENV DESTINATION_DIR="/opt"
 
-ENV LD_LIBRARY_PATH="${INSTALL_DIR}/lib64:${INSTALL_DIR}/lib"
-
-RUN mkdir -p /opt
+RUN mkdir -p ${DESTINATION_DIR}/lib \
+    ${DESTINATION_DIR}/bin
 
 WORKDIR /opt
 
-COPY --from=php ${INSTALL_DIR}/lib/libMagickWand-6.Q16.so.6.0.0  ${INSTALL_DIR}/lib/libMagickWand-6.Q16.so.6
-COPY --from=php ${INSTALL_DIR}/lib/libMagickCore-6.Q16.so.6.0.0 ${INSTALL_DIR}/lib/libMagickCore-6.Q16.so.6
+COPY --from=php ${INSTALL_DIR}/lib/libMagickWand-6.Q16.so.6.0.0  ${DESTINATION_DIR}/lib/libMagickWand-6.Q16.so.6
+COPY --from=php ${INSTALL_DIR}/lib/libMagickCore-6.Q16.so.6.0.0 ${DESTINATION_DIR}/lib/libMagickCore-6.Q16.so.6
 
-COPY --from=php /usr/lib64/libwebp.so.4.0.2 ${INSTALL_DIR}/lib/libwebp.so.4
-COPY --from=php ${INSTALL_DIR}/lib/libde265.so.0.0.12 ${INSTALL_DIR}/lib/libde265.so.0
-COPY --from=php ${INSTALL_DIR}/lib/libheif.so.1.6.2 ${INSTALL_DIR}/lib/libheif.so.1
+COPY --from=php /usr/lib64/libwebp.so.4.0.2 ${DESTINATION_DIR}/lib/libwebp.so.4
+COPY --from=php ${INSTALL_DIR}/lib/libde265.so.0.0.12 ${DESTINATION_DIR}/lib/libde265.so.0
+COPY --from=php ${INSTALL_DIR}/lib/libheif.so.1.6.2 ${DESTINATION_DIR}/lib/libheif.so.1
 
-COPY --from=php /tmp/imagick.so ${INSTALL_DIR}/imagick.so
+COPY --from=php /tmp/imagick.so ${DESTINATION_DIR}/bin/imagick.so
 
 RUN LD_LIBRARY_PATH= yum -y install zip
 
-CMD echo "zip --quiet --recurse-paths /export/imagick.zip  ${INSTALL_DIR}"
+CMD echo "zip --quiet --recurse-paths /export/imagick.zip  ${DESTINATION_DIR}"
