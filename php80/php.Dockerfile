@@ -425,10 +425,8 @@ RUN set -xe; \
     cp php.ini-production ${INSTALL_DIR}/etc/php/php.ini
 
 # RUN pecl install redis
-RUN pecl install -f redis
-
-# RUN pecl install imagick
-# RUN pecl install imagick
+# https://pecl.php.net/package/redis
+RUN pecl install -f redis-5.2.2
 
 # Strip All Unneeded Symbols
 
