@@ -443,7 +443,7 @@ RUN mkdir -p /opt/lib/curl
 
 RUN cp /opt/vapor/bin/* /opt/bin
 RUN cp /opt/vapor/sbin/* /opt/bin
-RUN cp /opt/vapor/lib/php/extensions/no-debug-zts-20190902/* /opt/bin
+#RUN cp /opt/vapor/lib/php/extensions/no-debug-zts-20190902/* /opt/bin
 
 RUN cp /opt/vapor/lib/* /opt/lib || true
 RUN cp /opt/vapor/lib/libcurl* /opt/lib/curl || true
