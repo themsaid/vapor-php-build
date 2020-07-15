@@ -426,7 +426,7 @@ RUN set -xe; \
 
 # RUN pecl install redis
 # https://pecl.php.net/package/redis
-RUN pecl install -f redis-5.2.2
+RUN pecl install -f redis-5.2.0
 
 # Strip All Unneeded Symbols
 
