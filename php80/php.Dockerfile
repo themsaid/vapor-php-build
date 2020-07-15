@@ -364,6 +364,7 @@ ARG php
 ENV VERSION_PHP=${php}
 ENV PHP_BUILD_DIR=${BUILD_DIR}/php
 
+# TODO download from https://github.com/php/php-src/archive
 RUN set -xe; \
     mkdir -p ${PHP_BUILD_DIR}; \
     curl -Ls https://downloads.php.net/~carusogabriel/php-${VERSION_PHP}.tar.gz \
@@ -384,6 +385,7 @@ RUN set -xe \
         --build=x86_64-pc-linux-gnu \
         --prefix=${INSTALL_DIR} \
         --enable-option-checking=fatal \
+        # TODO: should enable
 #        --enable-maintainer-zts \
         --with-config-file-path=${INSTALL_DIR}/etc/php \
         --with-config-file-scan-dir=${INSTALL_DIR}/etc/php/conf.d:/var/task/php/conf.d \
@@ -425,8 +427,8 @@ RUN set -xe; \
     cp php.ini-production ${INSTALL_DIR}/etc/php/php.ini
 
 # RUN pecl install redis
-# https://pecl.php.net/package/redis
-RUN pecl install -f redis-5.2.0
+# TODO
+#RUN pecl install -f redis
 
 # Strip All Unneeded Symbols
 
